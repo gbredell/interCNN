@@ -1,12 +1,12 @@
 __author__ = 'gbredell'
 import data_loader
-import config
+from config import paths
 import numpy as np
 import os
 import pydicom as dicom
 import nrrd
 
-def load_prostate_img_and_labels(train_ids_list = config.data_split ,data_path_tr = config.input_pth ,seg_path_tr = config.seg_pth):
+def load_prostate_img_and_labels(train_ids_list = paths.data_split ,data_path_tr = paths.input_pth ,seg_path_tr = paths.seg_pth):
     '''
     Loads the dicom files and put all of the medical images and corresponding segmentations in numpy arrays
     :param train_ids_list: Link to numpy file specifying how the data should be split
@@ -94,7 +94,7 @@ def data_selection(select_list):
 #list_val_training: Patient case used for validation (to stop training)
 #list_test: Patient cases used for testing
 
-list_total = np.load(config.data_split)
+list_total = np.load(paths.data_split)
 
 data_splitter = {'autoCNN_train': list_total[:15], 'autoCNN_val': list_total[15:23], 'interCNN_train': list_total[:23],
                     'interCNN_val': [list_total[23]], 'test': list_total[24:29]}

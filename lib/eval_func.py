@@ -3,7 +3,7 @@ import torch
 import scribble_generation as sg
 import utils
 import numpy as np
-import config
+from config import paths
 
 def interCNN_test(cnn1, cnn_saved, loader_data, val_iterations = 10, controls = 1, num_class = 2,  save = True, checker = False):
 
@@ -60,9 +60,9 @@ def interCNN_test(cnn1, cnn_saved, loader_data, val_iterations = 10, controls = 
 
     if save:
         #Save the parameters
-        np.save(config.save_test_pth + 'avg_class_cnn1.npy', avg_class_cnn1/total)
-        np.save(config.save_test_pth + 'avg_class_cnn2.npy', np.mean(avg_class_cnn2, axis=1)/(total/controls))
-        np.save(config.save_test_pth + 'std_class_cnn2.npy', np.std(avg_class_cnn2/(total/controls), axis=1))
+        np.save(paths.save_test_pth + 'avg_class_cnn1.npy', avg_class_cnn1/total)
+        np.save(paths.save_test_pth + 'avg_class_cnn2.npy', np.mean(avg_class_cnn2, axis=1)/(total/controls))
+        np.save(paths.save_test_pth + 'std_class_cnn2.npy', np.std(avg_class_cnn2/(total/controls), axis=1))
 
     if checker:
         return np.expand_dims(avg_class_cnn1/total, axis=0), np.expand_dims(np.mean(avg_class_cnn2, axis=1)/(total/controls), axis=0)
@@ -98,7 +98,7 @@ def autoCNN_test(cnn1, loader_data, controls = 1, num_class = 2,  save = True, c
 
     if save:
         #Save the parameters
-        np.save(config.save_test_pth + 'avg_class_cnn1.npy', avg_class_cnn1/total)
+        np.save(paths.save_test_pth + 'avg_class_cnn1.npy', avg_class_cnn1/total)
 
     if checker:
         return np.expand_dims(avg_class_cnn1/total, axis=0)

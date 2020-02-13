@@ -1,13 +1,13 @@
 __author__ = 'gbredell'
-import NCI_ISBI_2013 as nci
-import data_loader as dl
+from data import NCI_ISBI_2013 as nci
+from data import data_loader as dl
 import numpy as np
-import config
-import models
-import utils
-import scribble_generation as sg
+from config import paths
+from lib import models
+from lib import utils
+from lib import scribble_generation as sg
 import torch
-import eval_func as val
+from lib import eval_func as val
 
 learning_rate = 0.0001
 num_epochs_interCNN = 80
@@ -32,7 +32,7 @@ val_loader_interCNN = torch.utils.data.DataLoader(dataset=val_dataset_interCNN, 
 
 #Import the model
 cnn1 = models.autoCNN(num_classes).cuda()
-cnn1.load_state_dict(torch.load(config.autoCNN_pth))
+cnn1.load_state_dict(torch.load(paths.autoCNN_pth))
 cnn1.eval();
 
 cnn2 = models.interCNN(num_classes).cuda()
@@ -94,11 +94,11 @@ for epoch in range(num_epochs_interCNN):
             print("Epoch Number: ", epoch, '/', num_epochs_interCNN, " Dice Score: ", np.mean(cnn2_dc, axis = 2).flatten(), " Loss: ", loss.data.cpu())
 
             #Save the parameters
-            np.save(config.save_val_pth + 'class_cnn1_score.npy', class_cnn1_score)
-            np.save(config.save_val_pth + 'class_cnn2_score.npy', class_cnn2_score)
-            torch.save(cnn2.state_dict(), config.save_model_pth + 'interCNN_last_xxx.pt')
+            np.save(paths.save_val_pth + 'class_cnn1_score.npy', class_cnn1_score)
+            np.save(paths.save_val_pth + 'class_cnn2_score.npy', class_cnn2_score)
+            torch.save(cnn2.state_dict(), paths.save_model_pth + 'interCNN_last_xxx.pt')
 
             if len(loss_list) > 51:
                 #Save the cnn with the best validation score out of the average
                 if np.mean(class_cnn2_score[-51:-1,:]) < np.mean(class_cnn2_score[-50:, :]):
-                    torch.save(cnn2.state_dict(), config.save_model_pth + 'interCNN_best_xxx.pt')
+                    torch.save(cnn2.state_dict(), paths.save_model_pth + 'interCNN_best_xxx.pt')

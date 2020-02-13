@@ -1,14 +1,14 @@
 __author__ = 'gbredell'
 
-import NCI_ISBI_2013 as nci
-import data_loader as dl
+from data import NCI_ISBI_2013 as nci
+from data import data_loader as dl
 import numpy as np
-import config
-import models
-import utils
+from config import paths
+from lib import models
+from lib import utils
 import torch
-import eval_func as val
-import itertools as it
+from lib import eval_func as val
+from lib import itertools as it
 
 learning_rate = 0.0001
 num_epochs_autoCNN = 400
@@ -68,10 +68,10 @@ for epoch in range(num_epochs_autoCNN):
             print("Epoch Number: ", epoch, '/', num_epochs_autoCNN, " Dice Score: ", cnn1_dc[0,:].flatten(), " Loss: ", loss.data.cpu())
 
             #Save the parameters
-            np.save(config.save_val_pth + 'autoCNN_class_score.npy', class_cnn1_score)
-            torch.save(cnn1.state_dict(), config.save_model_pth + 'autoCNN_last.pt')
+            np.save(paths.save_val_pth + 'autoCNN_class_score.npy', class_cnn1_score)
+            torch.save(cnn1.state_dict(), paths.save_model_pth + 'autoCNN_last.pt')
 
             if len(loss_list) > 50:
                 #Save the cnn with the best validation score out of the average
                 if (np.mean(class_cnn1_score[-51:-1, :])) < (np.mean(class_cnn1_score[-50:, :])):
-                    torch.save(cnn1.state_dict(), config.save_model_pth + 'autoCNN_best.pt')
+                    torch.save(cnn1.state_dict(), paths.save_model_pth + 'autoCNN_best.pt')
