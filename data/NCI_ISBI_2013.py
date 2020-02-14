@@ -1,5 +1,8 @@
 __author__ = 'gbredell'
-import data_loader
+import sys
+sys.path.append('../')
+
+from data import data_loader
 from config import paths
 import numpy as np
 import os

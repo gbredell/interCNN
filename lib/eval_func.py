@@ -1,7 +1,10 @@
 __author__ = 'gbredell'
+import sys
+sys.path.append('../')
+
 import torch
-import scribble_generation as sg
-import utils
+import lib.scribble_generation as sg
+import lib.utils as utils
 import numpy as np
 from config import paths
 
