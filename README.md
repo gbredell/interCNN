@@ -16,10 +16,14 @@ Method
 ---
 Here however, we present an unique training strategy for convolutional neural networks (CNNs) trained on top of an automatic method to enable interactive segmentation editing that is not limited to binary segmentation. By utilizing a robot-user during training, we closely mimic realistic use cases to achieve optimal editing performance.
 
+![Method Overview](https://github.com/gbredell/interCNN/blob/master/pictures/Interaction_Loop.png)
+
 
 Dataset
 ---
 The data used to train the method was from the [NCI_ISBI_2013 challenge](https://wiki.cancerimagingarchive.net/display/Public/NCI-ISBI+2013+Challenge+-+Automated+Segmentation+of+Prostate+Structures)
+
+![Applied to Dataset](https://github.com/gbredell/interCNN/blob/master/pictures/example_1.png)
 
 Code
 ---
